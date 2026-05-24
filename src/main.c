@@ -65,6 +65,7 @@ static uint32_t last_key_ms = 0;
 static uint16_t last_x = 16384;
 static uint16_t last_y = 16384;
 static uint8_t last_buttons = 0;
+static bool mouse_was_active = false;
 static bool last_pins[29];
 
 static const char *menu_items[] = {
@@ -414,18 +415,40 @@ static void send_keyboard_report(void) {
 static void send_mouse_report(void) {
     uint8_t buttons = 0;
     bool active = pressed(PIN_ACTIVE);
+    bool allow_mouse = (screen == SCREEN_NORMAL && active);
 
-    if (screen == SCREEN_NORMAL && active) {
-        uint16_t rawx = adc_avg(ADC_X_CH, 16);
-        uint16_t rawy = adc_avg(ADC_Y_CH, 16);
-        uint16_t x = map_adc(rawx, cfg.x_min, cfg.x_max);
-        uint16_t y = map_adc(rawy, cfg.y_min, cfg.y_max);
-        last_x = smooth_value(last_x, x);
-        last_y = smooth_value(last_y, y);
+    // GP20 is the master active/passive control.
+    // When GP20 is not pressed, do NOT send absolute mouse position reports.
+    // This lets the normal PC mouse move freely.
+    if (!allow_mouse) {
+        // If we were active before, send one last release report so mouse buttons do not stay pressed.
+        if (mouse_was_active) {
+            uint8_t release_report[5] = {
+                0,
+                (uint8_t)(last_x & 0xFF),
+                (uint8_t)(last_x >> 8),
+                (uint8_t)(last_y & 0xFF),
+                (uint8_t)(last_y >> 8)
+            };
+            tud_hid_report(REPORT_ID_MOUSE, release_report, sizeof(release_report));
+        }
 
-        if (pressed(PIN_TRIGGER)) buttons |= 0x01;
-        if (pressed(PIN_SELECT_BOMB)) buttons |= 0x02;
+        mouse_was_active = false;
+        last_buttons = 0;
+        return;
     }
+
+    mouse_was_active = true;
+
+    uint16_t rawx = adc_avg(ADC_X_CH, 16);
+    uint16_t rawy = adc_avg(ADC_Y_CH, 16);
+    uint16_t x = map_adc(rawx, cfg.x_min, cfg.x_max);
+    uint16_t y = map_adc(rawy, cfg.y_min, cfg.y_max);
+    last_x = smooth_value(last_x, x);
+    last_y = smooth_value(last_y, y);
+
+    if (pressed(PIN_TRIGGER)) buttons |= 0x01;
+    if (pressed(PIN_SELECT_BOMB)) buttons |= 0x02;
 
     last_buttons = buttons;
     uint8_t report[5] = {

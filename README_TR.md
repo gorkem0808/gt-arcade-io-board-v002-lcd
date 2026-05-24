@@ -76,3 +76,8 @@ Player 2:
 - Light Gun: `GT ARCADE IO P2 LCD`
 
 Tetik ve diğer butonlar TeknoParrot'ta cihazdan gelen tuşlara atanır.
+
+
+## V0.02A GP20 düzeltmesi
+
+GP20 sistem aktif/pasif anahtarıdır. GP20 basılı değilken Pico absolute mouse konumu göndermez; bu sayede normal PC mouse serbest kullanılabilir. GP20 basılıyken potans X/Y nişangahı hareket ettirir ve tetik/bomba aktif olur.
