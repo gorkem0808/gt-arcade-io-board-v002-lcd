@@ -1,0 +1,19 @@
+OLMASI GEREKENLER
+
+- Her oyuncu icin ayri Pico kullanilmali.
+- Her Pico kendi LCD ekranindan kalibre edilmeli.
+- Kalibrasyon 4 kose ile yapilmali.
+- Kose kaydetmek icin imleci herhangi bir butona goturmek gerekmemeli.
+- GP6 fiziksel butonu koseyi kaydetmeli.
+- Titreşim azaltma LCD menüsünden AZ / ORTA / YUKSEK olarak ayarlanmali.
+- Buton testi LCD'de gorev isimleriyle gorunmeli.
+- GP20 sistem aktif / pasif olarak calismali.
+
+OLMAMASI GEREKENLER
+
+- PC kalibrasyon programi olmamali.
+- CMD veya Python zorunlulugu olmamali.
+- Windows baslangic programi olmamali.
+- Kalibrasyonda orta nokta olmamali.
+- Kullanici deadzone, smoothing gibi karmasik ayarlari gormemeli.
+- P1 ve P2 ayni cihaz adi ile gorunmemeli.

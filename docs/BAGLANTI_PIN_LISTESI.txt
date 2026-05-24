@@ -1,0 +1,33 @@
+GT ARCADE KONTROL IO BOARD V0.02 LCD - PIN LISTESI
+
+POTANSLAR:
+GP26 = X potans orta ucu
+GP27 = Y potans orta ucu
+Potans bir dis ucu = 3V3
+Potans diger dis ucu = GND
+
+LCD 16x2 I2C:
+GP0 = LCD SDA
+GP1 = LCD SCL
+LCD VCC = 5V veya 3V3 LCD modeline gore
+LCD GND = GND
+
+BUTONLAR:
+GP2  = Menu yukari
+GP3  = Menu asagi
+GP4  = Menu sol / azalt
+GP5  = Menu sag / artir
+GP6  = Bomba + Sec / Kaydet
+GP7  = Tetik
+GP8  = Jarjor degistir / Geri / Iptal
+GP17 = Coin / Kredi
+GP18 = Start
+GP19 = LCD Menu / Kalibrasyon
+GP20 = Sistem aktif / pasif
+
+BUTON BAGLANTISI:
+Her buton: GP pini -> buton -> GND
+
+ONEMLI:
+GP20 basili degilse silah aktif olmaz. Potans ve tetik oyun tarafinda calismaz.
+LCD menu ise GP20'ye bagli olmadan acilabilir.
